@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="huangshan" class="com.peerfintech.funcenhance.HuangShanScenicSpot">
+    </bean>
+    <bean id="encoreableDelegate" class="com.peerfintech.funcenhance.DefaultEnhance" />
+    <aop:config>
+<!--        <aop:aspect>-->
+<!--            <aop:declare-parents-->
+<!--                    types-matching="com.peerfintech.funcenhance.ScenicSpot+"-->
+<!--                    implement-interface="com.peerfintech.funcenhance.VisitEncoreable"-->
+<!--                    default-impl="com.peerfintech.funcenhance.DefaultEnhance"/>-->
+<!--        </aop:aspect>-->
+        <aop:aspect>
+            <aop:declare-parents
+                    types-matching="com.peerfintech.funcenhance.ScenicSpot+"
+                    implement-interface="com.peerfintech.funcenhance.VisitEncoreable"
+                    delegate-ref="encoreableDelegate" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>

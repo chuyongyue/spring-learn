@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd" >
+
+    <bean id="trackCounter" class="com.peerfintech.xmlconfiguration.TrackCounter" />
+
+    <bean id="cd" class="com.peerfintech.xmlconfiguration.BlankDisc" >
+        <property name="title" value="Sgt. Pepper's Lonelt Hearts Club Band" />
+        <property name="artist" value="The Beatles" />
+        <property name="tracks" >
+            <list>
+                <value>Sgt. Pepper's Lonely Hearts Club Band</value>
+                <value>Lucy in the Sky with Diamonds</value>
+                <value>Getting Better</value>
+                <value>Fixing a Hole</value>
+                <!-- ...other tracks omitted for brevity... -->
+            </list>
+        </property>
+    </bean>
+
+    <aop:config>
+        <aop:aspect ref="trackCounter">
+            <aop:pointcut
+                    id="trackPlayed"
+                    expression="execution(* com.peerfintech.xmlconfiguration.CompactDisc.playTrack(int)) and args(trackNumber)" />
+
+            <aop:before pointcut-ref="trackPlayed" method="countTrack" />
+        </aop:aspect>
+    </aop:config>
+
+</beans>
